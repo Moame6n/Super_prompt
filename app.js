@@ -8,6 +8,7 @@ const STORAGE_KEYS = {
   model: "promptArchitect_model",
   chats: "promptArchitect_chats",
   activeChat: "promptArchitect_activeChatId",
+  onboardingSeen: "promptArchitect_onboardingSeen",
 };
 
 // ---------------- الحالة العامة ----------------
@@ -503,10 +504,13 @@ el.saveSettingsBtn.addEventListener("click", () => {
 
 // ---------------- تنبيه الإعداد الأولي ----------------
 function showOnboarding() {
+  // لو المستخدم شافه قبل كده، أو الإعدادات متظبطة أصلاً، متظهروش
+  if (isConfigured() || localStorage.getItem(STORAGE_KEYS.onboardingSeen)) return;
   el.onboardingToast.classList.add("show");
 }
 function hideOnboarding() {
   el.onboardingToast.classList.remove("show");
+  localStorage.setItem(STORAGE_KEYS.onboardingSeen, "1");
 }
 el.onboardingSettingsBtn.addEventListener("click", openSettings);
 
