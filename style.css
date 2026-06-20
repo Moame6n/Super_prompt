@@ -583,7 +583,6 @@ body.lang-en .send-btn svg { transform: none; }
   padding: 12px 18px;
   border-radius: var(--radius-md);
   font-size: 13px;
-  display: flex;
   align-items: center;
   gap: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
