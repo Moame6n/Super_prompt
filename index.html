@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>مُهندس البرومبت | Prompt Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Newsreader:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== الشريط الجانبي ===================== -->
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <div class="brand">
+      <span class="brand-mark">٭</span>
+      <div class="brand-text">
+        <strong data-i18n="brandName">مُهندس البرومبت</strong>
+        <small data-i18n="brandTag">Prompt Architect</small>
+      </div>
+    </div>
+    <button id="closeSidebarBtn" class="icon-btn mobile-only" aria-label="إغلاق القائمة">✕</button>
+  </div>
+
+  <button id="newChatBtn" class="new-chat-btn">
+    <span class="plus">+</span>
+    <span data-i18n="newChat">محادثة جديدة</span>
+  </button>
+
+  <div class="sidebar-section">
+    <span class="sidebar-label" data-i18n="history">السجل</span>
+    <div id="historyList" class="history-list">
+      <!-- المحادثات السابقة هتتحط هنا ديناميكيًا -->
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <button id="settingsBtn" class="settings-btn">
+      <span class="gear">⚙</span>
+      <span data-i18n="settings">الإعدادات</span>
+    </button>
+  </div>
+</aside>
+
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+<!-- ===================== المنطقة الرئيسية ===================== -->
+<main class="main">
+  <header class="topbar">
+    <button id="openSidebarBtn" class="icon-btn mobile-only" aria-label="فتح القائمة">☰</button>
+    <div class="topbar-title">
+      <span id="chatTitle" data-i18n="defaultChatTitle">محادثة جديدة</span>
+    </div>
+    <div class="topbar-actions">
+      <button id="langToggle" class="lang-toggle" aria-label="Switch language">EN</button>
+    </div>
+  </header>
+
+  <!-- ===================== منطقة الرسائل ===================== -->
+  <div id="chatArea" class="chat-area">
+
+    <div id="emptyState" class="empty-state">
+      <div class="empty-glyph">٭</div>
+      <h1 data-i18n="emptyTitle">من فكرة صغيرة... لبرومبت محترف</h1>
+      <p data-i18n="emptySubtitle">اكتب موضوعك أو فكرتك مهما كانت بسيطة، وهفككها معاك خطوة بخطوة لحد ما نوصل لبرومبت دقيق وشامل.</p>
+
+      <div class="suggestion-chips">
+        <button class="chip" data-fill="عايز برومبت لإنشاء بوت خدمة عملاء">
+          <span data-i18n="sug1">بوت خدمة عملاء</span>
+        </button>
+        <button class="chip" data-fill="عايز برومبت لكتابة محتوى تسويقي لمنتج">
+          <span data-i18n="sug2">محتوى تسويقي</span>
+        </button>
+        <button class="chip" data-fill="عايز برومبت لتحليل بيانات مالية">
+          <span data-i18n="sug3">تحليل بيانات</span>
+        </button>
+        <button class="chip" data-fill="عايز برومبت لتصميم منهج تعليمي">
+          <span data-i18n="sug4">منهج تعليمي</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="messagesList" class="messages-list"></div>
+
+  </div>
+
+  <!-- ===================== خانة الكتابة ===================== -->
+  <div class="composer-wrap">
+    <div class="composer">
+      <textarea
+        id="messageInput"
+        class="composer-input"
+        data-i18n-placeholder="composerPlaceholder"
+        placeholder="اكتب فكرتك هنا..."
+        rows="1"
+      ></textarea>
+      <button id="sendBtn" class="send-btn" aria-label="إرسال">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <p class="composer-hint" data-i18n="composerHint">قد يسأل المساعد أسئلة توضيحية قبل بناء البرومبت النهائي</p>
+  </div>
+
+</main>
+
+<!-- ===================== مودال الإعدادات ===================== -->
+<div id="settingsModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 data-i18n="settingsTitle">الإعدادات</h2>
+      <button id="closeSettingsBtn" class="icon-btn" aria-label="إغلاق">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="field-group">
+        <label for="apiKeyInput" data-i18n="apiKeyLabel">مفتاح Gemini API</label>
+        <div class="input-with-action">
+          <input type="password" id="apiKeyInput" data-i18n-placeholder="apiKeyPlaceholder" placeholder="AIza...">
+          <button id="toggleKeyVisibility" class="icon-btn small" aria-label="إظهار المفتاح">👁</button>
+        </div>
+        <p class="field-hint" data-i18n="apiKeyHint">
+          يُخزَّن المفتاح في متصفحك فقط ولا يُرسل لأي مكان سوى Google مباشرة عبر الخادم الوسيط الخاص بك.
+        </p>
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="get-key-link" data-i18n="getKeyLink">
+          الحصول على مفتاح مجاني من Google AI Studio ↗
+        </a>
+      </div>
+
+      <div class="field-group">
+        <label for="workerUrlInput" data-i18n="workerUrlLabel">رابط الـ Worker (الخادم الوسيط)</label>
+        <input type="text" id="workerUrlInput" placeholder="https://your-worker.workers.dev">
+        <p class="field-hint" data-i18n="workerUrlHint">رابط Cloudflare Worker الذي يربط هذه الصفحة بـ Gemini API.</p>
+      </div>
+
+      <div class="field-group">
+        <label for="modelSelect" data-i18n="modelLabel">الموديل</label>
+        <select id="modelSelect">
+          <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+          <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button id="saveSettingsBtn" class="primary-btn" data-i18n="saveSettings">حفظ الإعدادات</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== تنبيه إعداد أولي ===================== -->
+<div id="onboardingToast" class="onboarding-toast">
+  <span data-i18n="onboardingMsg">ابدأ بإدخال مفتاح Gemini ورابط الـ Worker من الإعدادات ⚙</span>
+  <button id="onboardingSettingsBtn" data-i18n="openSettings">فتح الإعدادات</button>
+</div>
+
+<script src="prompts.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
